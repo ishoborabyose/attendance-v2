@@ -4,6 +4,7 @@ import db from './db/models'
 import bodyParser from 'body-parser'; 
 import morgan from 'morgan';
 import cors from 'cors'
+import router from './Routes/index';
 
 
 
@@ -19,13 +20,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors());
 
 app.use(morgan("dev"))
-// app.use(router)
+
 app.get('/', (req, res) =>{
     res.status(200).json({
         message: 'Welcome to Smart Attendance '
     });
 });
-
+app.use(router)
 app.use((req, res) => {
     res.status(404).json({error: 'route not found'});
 });

@@ -1,0 +1,49 @@
+import { Attendee } from '../db/models';
+
+
+class AttendeeController{
+
+    static async createAttendee(req, res){
+
+        try {
+            const { cardId, name} = req.query;
+
+           
+           
+            const newAttendee = await Attendee.create({
+                cardId,
+                name
+            });
+            return res.status(201).json({
+                status: 201,
+                message: 'A new attendee have been added',
+                data: newAttendee
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                error: error.message
+            });
+        }
+
+    }
+
+    static async allAttendee(req, res){
+        try {
+            const allAttendee = await Attendee.findAll();
+            return res.status(200).json({
+                status: 200,
+                message: 'Add attendee were retrieved successfully',
+                data: allAttendee
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status:500,
+                error: error.message
+            });
+        }
+    }
+
+}
+
+export default AttendeeController;
