@@ -1,0 +1,46 @@
+{
+  "name": "attendance-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node ./src/index.js",
+    "build": "rm -rf build && babel -d ./build ./src -s",
+    "start": "npm run build && npm run migrate && npm run seed && node ./build/index.js",
+    "down": "node_modules/.bin/sequelize db:migrate:undo:all",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "seed": "node_modules/.bin/sequelize db:seed:all",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishoborabyose/attendance-v2.git"
+  },
+  "author": "Ishoborabyose",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ishoborabyose/attendance-v2/issues"
+  },
+  "homepage": "https://github.com/ishoborabyose/attendance-v2#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.1",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.4",
+    "@babel/register": "^7.15.3",
+    "@babel/runtime": "^7.15.4",
+    "nodemon": "^2.0.12",
+    "sequelize-cli": "^6.2.0"
+  }
+}
