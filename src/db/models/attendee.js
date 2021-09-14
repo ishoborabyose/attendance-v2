@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Attendee.belongsTo(models.Employees, {foreignKey: 'cardId', onDelete: 'CASCADE'})
-      Attendee.hasMany(models.Card, {foreignKey: 'cardId', onDelete: 'CASCADE' })
+     
       // define association here
     }
   };
