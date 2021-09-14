@@ -14,7 +14,6 @@ config();
 
 const app = express();
 const PORT = process.env.PORT || 2000;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors());
