@@ -7,17 +7,17 @@ class AttendeeController{
 
         try {
             const { cardId, name} = req.query;
-
-           
-           
-            const newAttendee = await Attendee.create({
+    
+            const newAttendee = {
                 cardId,
                 name
-            });
+            };
+
+            const attendees = await Attendee.create(newAttendee)
             return res.status(201).json({
                 status: 201,
                 message: 'A new attendee have been added',
-                data: newAttendee
+                data: attendees
             });
         } catch (error) {
             return res.status(500).json({
