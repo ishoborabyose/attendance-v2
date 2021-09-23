@@ -9,23 +9,39 @@ class EmployeeController {
 
         try {
             const {
-                name,
+                employeeId,
+                cardId,
+                firstName,
+                lastName,
                 gender,
                 department,
                 position,
-                contact,
+                PhoneNumber,
                 email,
-                cardId
+              
             } = req.body;
 
+            const employeeExist = await Employees.findOne({
+                where: { employeeId }
+            })
+
+            if(employeeExist){
+                return res.status(403).json({
+                    status: 403,
+                    error: 'This employee arleady exist'
+                })
+            }
+
             const newEmployee = await Employees.create({
-                name,
+                employeeId,
+                cardId,
+                firstName,
+                lastName,
                 gender,
                 department,
                 position,
-                contact,
+                PhoneNumber,
                 email,
-                cardId
             });
             
             return res.status(201).json({

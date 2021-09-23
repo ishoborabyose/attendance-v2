@@ -10,14 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Attendee.belongsTo(models.Employees, {foreignKey: 'cardId', onDelete: 'CASCADE'})
-      // Attendee.hasMany(models.Card, {foreignKey: 'cardId', onDelete: 'CASCADE' })
       // define association here
     }
   };
   Attendee.init({
-    cardId: DataTypes.STRING,
-    name: DataTypes.STRING
+    employeeId: DataTypes.INTEGER,
+    name: DataTypes.STRING,
+    cardId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Attendee',

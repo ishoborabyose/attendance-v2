@@ -1,4 +1,9 @@
-import { Attendee } from '../db/models';
+import { 
+    Attendee,
+    Employees,
+    Card
+ } from '../db/models';
+
 
 
 class AttendeeController{
@@ -6,19 +11,42 @@ class AttendeeController{
     static async createAttendee(req, res){
 
         try {
-            const { cardId, name} = req.query;
+            
+            const { cardId  } = req.query;
+            Card.findOne({
+                where: { cardId }
+            })
+            .then((readCard)=>{
+                if(readCard){
+                  Employees.findOne({
+                        where: {
+                            cardId
+                        }
+                    })
+                    .then((readEmployee) =>{
+                        if(readEmployee) {
+                            const selectedEmployee = {
+                                cardId: readEmployee.cardId,
+                                employeeId: readEmployee.employeeId,
+                                name: readEmployee.firstName,
+        
+                            };
+                              Attendee.create(selectedEmployee)
+                              return res.status(200).json({
+                                  status: 200,
+                                  message: 'You successfully attended',
+                                  data: selectedEmployee
+                              })
+                            
+                        } else {
+                            res.json({error: 'Access denied'});
+                        }
+                    })
+                }
+            })
     
-            const newAttendee = {
-                cardId,
-                name
-            };
-
-            const attendees = await Attendee.create(newAttendee)
-            return res.status(201).json({
-                status: 201,
-                message: 'A new attendee have been added',
-                data: attendees
-            });
+        
+            
         } catch (error) {
             return res.status(500).json({
                 status: 500,
