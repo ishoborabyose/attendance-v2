@@ -1,30 +1,11 @@
 'use strict';
+
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Attendees', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      cardId: {
-        type: Sequelize.STRING
-      },
-      name: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    });
+  up: function(queryInterface, Sequelize) {
+    return Promise.resolve()
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Attendees');
+
+  down: function(queryInterface) {
+    return Promise.resolve()
   }
 };
