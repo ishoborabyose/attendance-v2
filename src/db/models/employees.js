@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+         Employees.belongsTo(models.Card, {foreignKey: 'cardId', onDelete: 'CASCADE'})
       // define association here
     }
   };

@@ -8,8 +8,17 @@ class CardController{
         try {
             const { cardId } = req.body;
 
-           
-           
+           const cardExist = await Card.findOne({
+               where: { cardId }
+           })
+
+           if(cardExist){
+               return res.status(403).json({
+                status: 403,
+                error: 'This card arleady exist'
+               })
+           }
+
             const newCard = await Card.create({
                 cardId,
                
