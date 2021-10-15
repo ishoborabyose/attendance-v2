@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec babel-node ./src/index.js",
     "build": "rm -rf build && babel -d ./build ./src -s",
-    "start": "npm run build && npm run migrate && npm run seed && node ./build/index.js",
+    "start": "babel-node ./src/index.js",
     "down": "node_modules/.bin/sequelize db:migrate:undo:all",
     "migrate": "node_modules/.bin/sequelize db:migrate",
     "seed": "node_modules/.bin/sequelize db:seed:all",
