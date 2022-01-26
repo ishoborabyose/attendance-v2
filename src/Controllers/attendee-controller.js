@@ -43,8 +43,7 @@ class AttendeeController {
   static async allAttendee(req, res) {
     try {
       await Attendee.findAll({
-        order: [["id", "DESC"]],
-        group: ["id"],
+        group: ["cardId"],
         attributes: [
           [
             sequelize.Sequelize.fn("MAX", sequelize.Sequelize.col("createdAt")),
