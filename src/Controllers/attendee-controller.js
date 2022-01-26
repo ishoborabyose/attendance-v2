@@ -1,4 +1,5 @@
-import { Attendee, Employees, Card } from "../db/models";
+import { Attendee, Employees, Card, sequelize } from "../db/models";
+import { Op } from "sequelize";
 
 class AttendeeController {
   static async createAttendee(req, res) {
@@ -41,13 +42,52 @@ class AttendeeController {
 
   static async allAttendee(req, res) {
     try {
-      const allAttendee = await Attendee.findAll({
+      await Attendee.findAll({
         order: [["id", "DESC"]],
-      });
-      return res.status(200).json({
-        status: 200,
-        message: "Add attendee were retrieved successfully",
-        data: allAttendee,
+        group: ["id"],
+        attributes: [
+          [
+            sequelize.Sequelize.fn("MAX", sequelize.Sequelize.col("createdAt")),
+            "createdAt",
+          ],
+        ],
+      }).then((read) => {
+        if (read) {
+          const createdAtData = read.map((item) => {
+            return item.get("createdAt");
+          });
+          Attendee.findAll({
+            where: {
+              createdAt: createdAtData,
+            },
+          }).then((read) => {
+            if (read) {
+              const data = read.map((item) => {
+                return {
+                  id: item.id,
+                  cardId: item.cardId,
+                  employeeId: item.employeeId,
+                  name: item.name,
+                  createdAt: item.createdAt,
+                };
+              });
+
+              if (!data) {
+                return res.status(404).json({
+                  status: 404,
+                  error: "Data not found",
+                });
+              }
+
+              return res.status(200).json({
+                status: 200,
+                message: "Successfully retrieve last entry for attendee",
+
+                data: data,
+              });
+            }
+          });
+        }
       });
     } catch (error) {
       return res.status(500).json({
